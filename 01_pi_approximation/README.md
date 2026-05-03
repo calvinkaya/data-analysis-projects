@@ -24,4 +24,4 @@ Ensure you have the required libraries installed:
 `pip install numpy matplotlib`
 
 Run the script from your terminal:
-`python main.py`
+`pi_monte_carlo.py`
