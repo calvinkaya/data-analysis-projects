@@ -11,8 +11,9 @@ Built with a focus on **vectorised NumPy computation**, **clean modular code**, 
 |---|--------|-------|--------|
 | 1 | [`01_pi_approximation`](01_pi_approximation/) | Estimating π via random sampling | ✅ Done |
 | 2 | [`02_random_walk`](02_random_walk/) | 2D Brownian motion & diffusion | ✅ Done |
-| 3 | `03_nd_integration` | High-dimensional volume integration | 🔜 Planned |
-| 4 | `04_ising_model` | 2D Ising model (Metropolis algorithm) | 🔜 Planned |
+| 3 | [`03_stock_gbm`](03_stock_gbm/) | Stock simulation (GBM) & Value at Risk | ✅ Done |
+| 4 | `04_nd_integration` | High-dimensional volume integration | 🔜 Planned |
+| 5 | `05_ising_model` | 2D Ising model (Metropolis algorithm) | 🔜 Planned |
 
 ---
 
@@ -60,6 +61,26 @@ Simulates **10,000 Brownian particles** over 1,000 time steps using fully vector
 
 ---
 
+## 03 — Stock Price Simulation & Value at Risk
+
+Models **10,000 stock price paths** over 252 trading days using Geometric Brownian Motion (GBM) and computes the **95 % Value at Risk** from the terminal price distribution.
+
+$$S(t + \Delta t) = S(t) \cdot \exp\!\Bigl[\bigl(\mu - \tfrac{\sigma^2}{2}\bigr)\Delta t + \sigma\,\sqrt{\Delta t}\;Z\Bigr]$$
+
+### Analysis
+
+<p align="center">
+  <img src="03_stock_gbm/figures/gbm_analysis.png" width="800" alt="GBM price paths and VaR histogram">
+</p>
+
+### Key Design Decisions
+
+- **Full vectorisation** — all 10,000 × 252 random shocks are drawn in a single `rng.standard_normal((M, N))` call.  Log-returns are accumulated via `np.cumsum` and exponentiated — zero Python loops.
+- **Quantitative finance** — implements the exact-solution GBM discretisation and percentile-based VaR, standard tools in risk management.
+- **Portfolio ready** — clean parameter block, modular functions, and publication-quality two-panel figure.
+
+---
+
 ## Quick Start
 
 ```bash
@@ -73,6 +94,7 @@ pip install numpy matplotlib
 # Run individual modules
 python 01_pi_approximation/pi_monte_carlo.py
 python 02_random_walk/random_walk.py
+python 03_stock_gbm/stock_gbm.py
 ```
 
 ---
@@ -100,8 +122,12 @@ python 02_random_walk/random_walk.py
 │   └── figures/
 │       ├── random_walk_analysis.png
 │       └── diffusion_animation.gif
-├── 03_nd_integration/            (planned)
-├── 04_ising_model/               (planned)
+├── 03_stock_gbm/
+│   ├── stock_gbm.py
+│   └── figures/
+│       └── gbm_analysis.png
+├── 04_nd_integration/            (planned)
+├── 05_ising_model/               (planned)
 └── utils/                        (planned)
 ```
 
