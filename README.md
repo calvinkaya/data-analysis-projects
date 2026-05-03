@@ -12,7 +12,7 @@ Built with a focus on **vectorised NumPy computation**, **clean modular code**, 
 | 1 | [`01_pi_approximation`](01_pi_approximation/) | Estimating π via random sampling | ✅ Done |
 | 2 | [`02_random_walk`](02_random_walk/) | 2D Brownian motion & diffusion | ✅ Done |
 | 3 | [`03_stock_gbm`](03_stock_gbm/) | Stock simulation (GBM) & Value at Risk | ✅ Done |
-| 4 | `04_nd_integration` | High-dimensional volume integration | 🔜 Planned |
+| 4 | [`04_nd_integration`](04_nd_integration/) | 3D Volume & Inertia calculation | ✅ Done |
 | 5 | `05_ising_model` | 2D Ising model (Metropolis algorithm) | 🔜 Planned |
 
 ---
@@ -81,6 +81,23 @@ $$S(t + \Delta t) = S(t) \cdot \exp\!\Bigl[\bigl(\mu - \tfrac{\sigma^2}{2}\bigr)
 
 ---
 
+## 04 — 3D Integration: Volume & Moment of Inertia
+
+Evaluates the volume, center of mass, and moment of inertia of a complex 3D body (a sphere with an off-center cylindrical hole) using **1,000,000** Monte Carlo sample points.
+
+### 3D Visualization
+
+<p align="center">
+  <img src="04_nd_integration/figures/3d_integration_analysis.png" width="600" alt="3D scatter plot colored by inertia">
+</p>
+
+### Key Design Decisions
+
+- **Hit-or-miss parallelization** — the bounding box coordinates are generated as a `(3, N)` matrix. Complex geometry intersections are handled entirely through logical NumPy masks (e.g. `in_sphere & out_cylinder`), processing 1 million points in milliseconds.
+- **Performance-aware visualization** — to avoid crashing Matplotlib, the script automatically downsamples the 3D scatter plot (e.g., plotting every 500th point) while retaining the full shape. Points are color-coded using `viridis` by their distance to the z-axis to visualize the moment of inertia density.
+
+---
+
 ## Quick Start
 
 ```bash
@@ -95,6 +112,7 @@ pip install numpy matplotlib
 python 01_pi_approximation/pi_monte_carlo.py
 python 02_random_walk/random_walk.py
 python 03_stock_gbm/stock_gbm.py
+python 04_nd_integration/nd_integration.py
 ```
 
 ---
@@ -126,7 +144,10 @@ python 03_stock_gbm/stock_gbm.py
 │   ├── stock_gbm.py
 │   └── figures/
 │       └── gbm_analysis.png
-├── 04_nd_integration/            (planned)
+├── 04_nd_integration/
+│   ├── nd_integration.py
+│   └── figures/
+│       └── 3d_integration_analysis.png
 ├── 05_ising_model/               (planned)
 └── utils/                        (planned)
 ```
