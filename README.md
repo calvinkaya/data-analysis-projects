@@ -13,7 +13,7 @@ Built with a focus on **vectorised NumPy computation**, **clean modular code**, 
 | 2 | [`02_random_walk`](02_random_walk/) | 2D Brownian motion & diffusion | ✅ Done |
 | 3 | [`03_stock_gbm`](03_stock_gbm/) | Stock simulation (GBM) & Value at Risk | ✅ Done |
 | 4 | [`04_nd_integration`](04_nd_integration/) | 3D Volume & Inertia calculation | ✅ Done |
-| 5 | `05_ising_model` | 2D Ising model (Metropolis algorithm) | 🔜 Planned |
+| 5 | [`05_ising_model`](05_ising_model/) | 2D Ising model (Metropolis algorithm) | ✅ Done |
 
 ---
 
@@ -98,6 +98,30 @@ Evaluates the volume, center of mass, and moment of inertia of a complex 3D body
 
 ---
 
+## 05 — 2D Ising Model Phase Transition
+
+Simulates the **2D Ising model** of ferromagnetism using the **Metropolis-Hastings algorithm**. Computes macroscopic thermodynamic observables (Energy, Magnetization, Specific Heat, Susceptibility) across a temperature sweep to observe the phase transition.
+
+### Thermodynamic Phase Transition ($L=100$)
+
+<p align="center">
+  <img src="05_ising_model/figures/phase_transition.png" width="800" alt="Ising Model Phase Transition Plots">
+</p>
+
+### Spin Domain Dynamics ($T \approx T_c$)
+
+<p align="center">
+  <img src="05_ising_model/figures/ising_simulation.gif" width="450" alt="Animated spin domains of the Ising Model">
+</p>
+
+### Key Design Decisions
+
+- **Checkerboard Vectorization** — MCMC algorithms are inherently sequential and hard to vectorize. By dividing the square lattice into two independent checkerboard subgrids, the code updates half the grid simultaneously without violating detailed balance.
+- **Thermodynamic Observables** — Calculates $C_v$ and $\chi$ via the fluctuation-dissipation theorem (variance of energy and magnetization over time) to precisely locate the phase transition near $T_c \approx 2.269$.
+- **High-Quality Plotting** — Uses `seaborn` aesthetics for clear, publication-ready multi-panel plots.
+
+---
+
 ## Quick Start
 
 ```bash
@@ -113,6 +137,7 @@ python 01_pi_approximation/pi_monte_carlo.py
 python 02_random_walk/random_walk.py
 python 03_stock_gbm/stock_gbm.py
 python 04_nd_integration/nd_integration.py
+python 05_ising_model/ising_model.py
 ```
 
 ---
@@ -148,7 +173,11 @@ python 04_nd_integration/nd_integration.py
 │   ├── nd_integration.py
 │   └── figures/
 │       └── 3d_integration_analysis.png
-├── 05_ising_model/               (planned)
+├── 05_ising_model/
+│   ├── ising_model.py
+│   └── figures/
+│       ├── phase_transition.png
+│       └── ising_simulation.gif
 └── utils/                        (planned)
 ```
 
