@@ -152,37 +152,6 @@ python 05_ising_model/ising_model.py
 
 ---
 
-## Project Structure
-
-```
-├── README.md
-├── 01_pi_approximation/
-│   ├── pi_monte_carlo.py
-│   └── figures/
-│       └── pi_approximation.png
-├── 02_random_walk/
-│   ├── random_walk.py
-│   └── figures/
-│       ├── random_walk_analysis.png
-│       └── diffusion_animation.gif
-├── 03_stock_gbm/
-│   ├── stock_gbm.py
-│   └── figures/
-│       └── gbm_analysis.png
-├── 04_nd_integration/
-│   ├── nd_integration.py
-│   └── figures/
-│       └── 3d_integration_analysis.png
-├── 05_ising_model/
-│   ├── ising_model.py
-│   └── figures/
-│       ├── phase_transition.png
-│       └── ising_simulation.gif
-└── utils/                        (planned)
-```
-
----
-
 ## License
 
 MIT License
